@@ -1,0 +1,11 @@
+
+// this is contact page .. here  layout visible all the children components of contact page
+
+export default function Layout({ children }) {
+    return (
+        <div>
+            <h2>Common Layout for Contact</h2>
+            {children}
+        </div>
+    );
+}
