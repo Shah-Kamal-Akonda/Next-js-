@@ -1,0 +1,18 @@
+
+//here the message 'common Layout is visible for all its children not only for contact /company  
+'use client'
+import { usePathname } from "next/navigation";
+
+export default function Layout({ children }) {
+
+   const currentPathName= usePathname();
+   console.log(currentPathName);
+    return (
+        <>
+            <h2></h2>
+            {currentPathName !== '/contact/company' ? <h2>Common Layout for Contact</h2>:null
+            }
+            {children}
+        </>
+    );
+}
