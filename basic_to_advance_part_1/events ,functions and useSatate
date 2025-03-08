@@ -1,0 +1,40 @@
+
+
+'use client'
+import React from 'react'
+import { useState } from 'react';
+
+const EventsFunctionsState = () => {
+
+
+
+const [firstName,setFirstName]= useState('Ali');
+
+const changeName = () => {
+    setFirstName('Akonda')
+}
+
+    // const sayHello = (name)=>{
+    //     alert(`Hello $(name)`);
+    // }
+
+
+//variable used
+    // let firstName ='Ali'
+    // const changeName=()=>{
+    //     firstName='akonda'
+    // }
+  return (
+    <>
+       <h2>Events functions  & states</h2>
+       {/* <button onClick={()=> alert('hello')}>Click Me</button> */}
+       {/* <button onClick={()=>sayHello('akonda')}>Click Me</button> */}
+
+
+       <h3>my name is : {firstName}</h3>
+       <button onClick={changeName}>Click Me</button>
+    </>
+  )
+}
+
+export default EventsFunctionsState
