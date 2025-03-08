@@ -1,0 +1,54 @@
+//this page... employees/page.js
+
+import Link from "next/link"
+
+
+
+const Employees = () => {
+  return (
+    <>
+      <h2>Employees</h2>
+      <ul>
+        <li>
+        <Link href='/employees/farzeen'>farzeen</Link>
+        </li>
+
+        <li>
+        <Link href='/employees/ali'>ali</Link>
+        </li>
+
+
+        <li>
+        <Link href='/employees/huzaifa'>huzaifa</Link>
+        </li>
+       
+      </ul>
+    </>
+  )
+}
+
+export default Employees
+
+
+
+this page.. employees/[details]/page.js
+
+'use client';
+
+import { use } from 'react';
+
+const Employees = ({ params }) => {
+    const unwrappedParams = use(params); // Unwrap the params promise
+
+    return (
+        <>
+            <h2>Employee Details</h2>
+            <h3>Employee Name: {unwrappedParams.details}</h3>
+        </>
+    );
+};
+
+export default Employees;
+
+
+
