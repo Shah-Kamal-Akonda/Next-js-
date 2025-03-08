@@ -1,0 +1,86 @@
+//this is home page
+
+'use client'
+import Link from 'next/link'
+import React from 'react'
+
+import { useRouter } from 'next/navigation'
+
+const page = () => {
+    const router = useRouter();
+    const handleNavigation = (routerName) =>{
+        router.push(routerName);
+    }
+  return (
+    <>
+        <h3>home</h3>
+        <br></br>
+        {/* <Link href='/about'>About</Link>
+        <Link href='/contact'>contact</Link> */}
+
+        {/* <button onClick={()=>router.push('/about')}>about</button>
+        <br></br>
+        <br></br>
+       <br></br>
+       <br></br>
+        <button onClick={()=>router.push('/contact')}>contact</button> */}
+
+<button onClick={()=>handleNavigation('/about')}>about</button>
+        <br></br>
+        <br></br>
+       <br></br>
+       <br></br>
+        <button onClick={()=>handleNavigation('/contact')}>contact</button>
+    </>
+  )
+}
+
+export default page
+
+
+
+
+//this is contact page 
+
+import Link from "next/link"
+const page = () => {
+  return (
+    <>
+       <h2>Contact page</h2>
+       <br></br>
+       <Link href='/about'>about</Link>
+       <br></br>
+       <br></br>
+       <br></br>
+       <Link href='/home'>Home</Link>
+    </>
+  )
+}
+
+export default page
+
+
+//this is about page 
+
+import Link from 'next/link'
+import React from 'react'
+
+const page = () => {
+  return (
+    <>
+      <h3 >about</h3>
+      <br></br>
+      <Link href='/home'>Home</Link>
+      <br></br>
+      <br></br>
+       <br></br>
+       <br></br>
+      <Link href='/contact'>contact</Link>
+    </>
+  )
+}
+
+export default page
+
+
+
