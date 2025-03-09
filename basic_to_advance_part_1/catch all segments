@@ -1,0 +1,35 @@
+// folder structure-    blog/page.js
+
+
+import React from 'react'
+
+const Blog = () => {
+  return (
+    <>
+       <h2>Blog</h2> 
+    </>
+  )
+}
+
+export default Blog
+
+
+
+
+// folder structure-    blog/[...posts] /page.js
+
+'use client'
+import React from 'react'
+import { use } from 'react';
+const Posts = ({params}) => {
+
+   const unwrappedParams = use(params); // Unwrap the params promise
+  return (
+    <>
+       <h2>Blog: {unwrappedParams.posts[0]}</h2>
+       <h2>Post: {unwrappedParams.posts[1]} </h2>
+    </>
+  )
+}
+
+export default Posts
