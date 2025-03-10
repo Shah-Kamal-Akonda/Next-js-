@@ -1,0 +1,28 @@
+// this use for golablly to show any page --> in app folder you should make a file .. not-found.js
+
+import React from 'react'
+
+const PageNotFound = () => {
+  return (
+    <>
+       <h2> 404 page | page not found</h2>
+    </>
+  )
+}
+
+export default PageNotFound  
+
+
+// for specific page you wnat to show 404 not found  then its structure should be  -> home/[...pagenotfound]/page.js  
+import React from 'react'
+
+const RouteBasedPageNotFound = () => {
+  return (
+    <>
+       <h2>404 not found for specific page or home page  </h2> 
+    </>
+  )
+}
+
+export default RouteBasedPageNotFound
+
