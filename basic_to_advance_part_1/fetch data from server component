@@ -1,0 +1,21 @@
+async function getPosts(){
+    let postData =await fetch('https://jsonplaceholder.typicode.com/posts')
+
+    postData = await postData.json();
+    return postData;
+}
+
+const Post = async() => {
+    let posts = await getPosts();
+    // console.log(posts)
+  return (
+    <>
+       <h2>Posts| fetch Data with API in Server component</h2> 
+       {
+        posts.map((post)=><h4 key={post.id}> Post title: {post.title} </h4> )
+       }
+    </>
+  )
+}
+
+export default Post
