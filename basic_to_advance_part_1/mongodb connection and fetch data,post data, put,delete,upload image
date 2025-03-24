@@ -210,7 +210,7 @@ let data=await fetch('http://localhost:3000/api/db-emp',
 export default AddEmployee
 
 
-//step 8 .. fetch data from mongo db .. 
+//step 9 .. fetch data from mongo db .. 
 
 import Link from 'next/link'
 import React from 'react'
@@ -268,7 +268,7 @@ const emp = await getData();
 export default GetEmployee 
 
 
-step 9 // put function.. update any field by using post man ..  forlder structure..    basic_to_advance\src\app\api\db-emp\[empid]\route.js  
+step 10 // put function.. update any field by using post man ..  forlder structure..    basic_to_advance\src\app\api\db-emp\[empid]\route.js  
 // remember one thing .. you should run mongodb other wise you got error and dont find the error
 
 import { NextResponse } from "next/server";
@@ -295,6 +295,259 @@ export const PUT = async(req,value) => {
     return NextResponse.json({result,success:true})
 }
 
+
+//step 11 .. pre filled form for update(put function) .. folder structure ->   basic_to_advance\src\app\api\db-emp\[empid]\route.js
+
+import { NextResponse } from "next/server";
+import Employee from '../../../../lib/databse/model/employees'
+import { connectionString } from "../../../../lib/databse/db_connection";
+
+import mongoose from "mongoose";
+
+export const PUT = async(req,value) => {
+
+    // for id 
+    // const empID = value.params.empid
+    const empID = (await value.params).empid;
+
+    const id={_id:empID};
+    //  console.log(id)
+    //for data
+
+    const payload  = await req.json();
+    // console.log(payload)
+    //For mongod db 
+    await mongoose.connect(connectionString);
+    //getting result
+    const result = await  Employee.findOneAndUpdate(id,payload)
+    
+    return NextResponse.json({result,success:true})
+}
+
+
+
+
+export const GET = async(req,value) => {
+
+    // for id 
+    const empID = (await value.params).empid;
+    const id={_id:empID};
+ 
+    //For mongod db 
+    await mongoose.connect(connectionString);
+    //getting result
+    const result = await  Employee.findById(id)
+    
+    return NextResponse.json({result,success:true})
+}  
+
+
+//step 11 .. for creating edit button on beside every field little things add in ... basic_to_advance\src\app\mongo-get-emp\page.js
+
+import Link from 'next/link'
+import React from 'react'
+const getData = async()=> {
+    let data = await fetch('http://localhost:3000/api/db-emp');
+    data = await data.json();
+    if (data.success)
+    {
+        return data.result;
+    }
+
+    else
+    {
+        return false;
+    }
+  }
+
+
+const GetEmployee = async() => {
+
+const emp = await getData();
+
+
+  return (
+
+    <>
+        <h2>Get Employee Data from Mongo DB</h2>
+         
+         <table border={2}>
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Salary</td>
+                    <td>Department</td>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    emp.map((item,i)=>(
+                        <tr key={i}>
+                         <td>{item.name}</td>
+                         <td>{item.salary}</td>
+                         <td>{item.department}</td>
+                         <td><Link href={`mongo-get-emp/${item._id}`}>Edit</Link></td>
+                        </tr>
+                    ))
+                }
+            </tbody>
+         </table>
+
+        <Link href='/'>Back to Home</Link>
+    </>
+  )
+}
+
+export default GetEmployee
+
+
+// step 12 now make prefilled form in  .. basic_to_advance\src\app\mongo-get-emp\[update]\page.js  
+'use client'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation';
+
+const UpdateEmployee = (props) => {
+
+
+
+
+const [name,setName]=useState('');
+const [salary,setSalary]=useState('');
+const [department,setDepartment]=useState('');
+// console.log(props.params.update)
+
+const params = useParams();  // Use useParams() to get the route parameters
+const id = params.update;  // Extract the employee ID
+//
+useEffect(()=>{
+    const employeeDetails = async ()=>{
+        let data =await fetch(`http://localhost:3000/api/db-emp/${id}`)
+        data=await data.json();
+        // console.log(data)
+        if(data.success)
+        {
+            let response = data.result;
+            setName(response.name)
+            setSalary(response.salary)
+            setDepartment(response.department)
+        }
+    }
+    employeeDetails();
+},[id] )
+
+
+
+  return (
+    <>
+         <h2>update  Employee </h2>
+
+         
+         <input type='text' value={name} onChange={(e) => setName(e.target.value)} placeholder='Enter Employee Name' /> <br/><br/><br/>
+
+
+         
+
+       
+         <input type='text' value={salary} onChange={(e) => setSalary(e.target.value)} placeholder='Enter Employee salary' /><br/><br/><br/>
+
+
+        
+         <input type='text' value={department} onChange={(e) => setDepartment(e.target.value)} placeholder='Enter Department Name' /><br/><br/><br/>
+ 
+          
+
+          <button > submit</button>
+
+
+    </>
+  )
+}
+
+export default UpdateEmployee
+
+
+// STEP 13..  UPDATE from prefilled  form .. folder structure ..basic_to_advance\src\app\mongo-get-emp\[update]\page.js
+
+'use client'
+import React, { useEffect, useState } from 'react'
+import { useParams, useRouter } from 'next/navigation';
+
+
+const UpdateEmployee = (props) => {
+
+    const router = useRouter();
+
+
+
+const [name,setName]=useState('');
+const [salary,setSalary]=useState('');
+const [department,setDepartment]=useState('');
+// console.log(props.params.update)
+
+const params = useParams();  // Use useParams() to get the route parameters
+const id = params.update;  // Extract the employee ID
+//
+useEffect(()=>{
+    const employeeDetails = async ()=>{
+        let data =await fetch(`http://localhost:3000/api/db-emp/${id}`)
+        data=await data.json();
+        // console.log(data)
+        if(data.success)
+        {
+            let response = data.result;
+            setName(response.name)
+            setSalary(response.salary)
+            setDepartment(response.department)
+        }
+    }
+    employeeDetails();
+},[id] )
+
+const updateRecord = async () => {
+    let data = await fetch(`http://localhost:3000/api/db-emp/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, salary, department }) // Corrected JSON.stringify()
+    });
+
+    data = await data.json();
+    if (data.success) {
+        alert('Record updated successfully');
+        router.push('/mongo-get-emp');
+    } else {
+        alert('Try again');
+    }
+};
+
+  return (
+    <>
+         <h2>update  Employee </h2>
+
+         
+         <input type='text' value={name} onChange={(e) => setName(e.target.value)} placeholder='Enter Employee Name' /> <br/><br/><br/>
+
+
+         
+
+       
+         <input type='text' value={salary} onChange={(e) => setSalary(e.target.value)} placeholder='Enter Employee salary' /><br/><br/><br/>
+
+
+        
+         <input type='text' value={department} onChange={(e) => setDepartment(e.target.value)} placeholder='Enter Department Name' /><br/><br/><br/>
+ 
+          
+
+          <button onClick={updateRecord} > update</button>
+
+
+    </>
+  )
+}
+
+export default UpdateEmployee
 
 
 
